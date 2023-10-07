@@ -33,6 +33,7 @@ contract SyntheticToken is ERC20, ReentrancyGuard {
     function updateValue() external nonReentrant {
         int price = getLatestPrice();
         require(price > 0, "Price is not valid");
-        totalSupply = _totalSupply.mul(uint256(price)); }
+        totalSupply = _totalSupply.mul(uint256(price)); 
+    }
 }
 ```
