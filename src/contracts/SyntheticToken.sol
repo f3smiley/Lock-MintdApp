@@ -20,6 +20,7 @@ contract SyntheticToken is ERC20, ReentrancyGuard {
         _mint(to, amount);
     }
 
+
     function burn(address from, uint256 amount) public nonReentrant {
         _burn(from, amount);
     }
