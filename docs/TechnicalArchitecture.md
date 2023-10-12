@@ -16,13 +16,13 @@ The source code for this contract can be found in `src/contracts/TokenLocker.sol
 
 The SyntheticToken contract is an ERC20 compliant token contract deployed on the Polygon network (chain 137). This contract mints new tokens when the `mintTokens()` function is called and burns tokens when the `burn()` function is called. 
 
-The contract integrates a Chainlink oracle to get the latest ETH/USD price and updates the total token supply value based on the locked assets. 
+The contract integrates a Chainlink oracle to get the latest ETH/USD price from chain 138 and updates the total token supply value based on the locked assets on chain 138. It then reflects this value on chain 137.
 
 The source code for this contract can be found in `src/contracts/SyntheticToken.sol`.
 
 ## Chainlink Oracle
 
-The Chainlink oracle provides the bridge between the two contracts by supplying ETH/USD price data to the Polygon network. This allows the SyntheticToken contract to reflect the value of the locked assets in the minted synthetic tokens.
+The Chainlink oracle, along with other nodes like Bisu on chain 138 and the node for Polygon on chain 137, provides the bridge between the two contracts. It supplies ETH/USD price data from chain 138 to the Polygon network on chain 137. This allows the SyntheticToken contract to reflect the value of the locked assets in the minted synthetic tokens on chain 137.
 
 ## Frontend Interface
 
@@ -42,8 +42,8 @@ The source code for the frontend interface can be found in the `src/components` 
 
 The minting and burning process is handled by JavaScript functions which call the respective contract functions. These functions are:
 
-- `lockETH()`: Interacts with the TokenLocker contract to lock tokens and emit an event.
-- `mintTokens()`: Listens for the lock event and mints synthetic tokens.
-- `updateValue()`: Gets the latest price from the Chainlink oracle and updates the synthetic token value.
+- `lockETH()`: Interacts with the TokenLocker contract to lock tokens and emit an event on chain 138.
+- `mintTokens()`: Listens for the lock event on chain 138 and mints synthetic tokens on chain 137.
+- `updateValue()`: Gets the latest price from the Chainlink oracle and other nodes on chain 138, and updates the synthetic token value on chain 137.
 
 The source code for these functions can be found in the `src/js` directory.

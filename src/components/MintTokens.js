@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import SyntheticToken from '../abis/SyntheticToken.json';
+import ChainlinkPriceFeed from '../abis/ChainlinkPriceFeed.json';
+import { getLockedETHValue } from '../js/updateValue';
 
 const MintTokens = () => {
   const [value, setValue] = useState('');
+  const [lockedETHValue, setLockedETHValue] = useState('');
 
   const mintTokens = async () => {
+    const lockedETHValue = await getLockedETHValue();
+    setLockedETHValue(lockedETHValue);
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
@@ -22,6 +27,7 @@ const MintTokens = () => {
   return (
     <div>
       <h2>Mint Synthetic Tokens</h2>
+      <p>Locked ETH Value on Chain 138: {lockedETHValue}</p>
       <input
         type="text"
         value={value}
@@ -29,6 +35,7 @@ const MintTokens = () => {
         placeholder="Enter amount to mint"
       />
       <button onClick={mintTokens}>Mint Tokens</button>
+      <p>Value on Chain 137 (Polygon): {value}</p>
     </div>
   );
 };
